@@ -6,12 +6,21 @@ function App() {
   const [formData, setFormData] = useState({
     title: "",
     task: "",
-    isComplete: ""
+    isComplete: false
   });
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    
+
+    // Add the form data to the task list
+    setTaskList([...taskList, formData]);
+
+    // Clear the form
+    setFormData({
+      title: "",
+      task: "",
+      isComplete: false
+    });
   };
 
   const handleChange = (e) => {
@@ -23,34 +32,56 @@ function App() {
     }));
   };
 
+  const displayTaskList = () => {
+    return (
+      <ul>
+        {taskList.map((task, index) => (
+          <li key={index}>
+            Title: {task.title}, Task: {task.task}, Is Complete: {task.isComplete.toString()}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <div className="App">
       <h1>Iron Task List</h1>
       <br />
       <form onSubmit={handleFormSubmit}>
         <label>
-          Title: 
-          <input 
-          type='text' 
-          name="title"
-           value={formData.title} onChange={handleChange} />
+          Title:
+          <input
+            type='text'
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
-          Task: 
-          <input 
-          type='text' 
-          name="task" 
-          value={formData.task} onChange={handleChange} />
+          Task:
+          <input
+            type='text'
+            name="task"
+            value={formData.task}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <label>
-          Is Complete: 
-          <input type='checkbox' name="isComplete" checked={formData.isComplete} onChange={handleChange} />
+          Is Complete:
+          <input
+            type='checkbox'
+            name="isComplete"
+            checked={formData.isComplete}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <button type="submit">Send</button>
       </form>
+      {displayTaskList()}
     </div>
   );
 }
