@@ -8,7 +8,7 @@ function App() {
     task: '',
     isComplete: false
   });
-  const [displayTasks, setDisplayTasks] = useState(true);
+  const [displayTasks, setDisplayTasks] = useState(false);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -20,10 +20,14 @@ function App() {
       task: '',
       isComplete: false
     });
+
+    setDisplayTasks(true); // Display the task list after submitting the form
   };
 
   const updateTask = (id) => {
-    setTaskList(() => [...taskList, taskList[id]]);
+    const updatedList = [...taskList];
+    updatedList[id].isComplete = !updatedList[id].isComplete;
+    setTaskList(updatedList);
   };
 
   const handleChange = (e) => {
@@ -40,16 +44,15 @@ function App() {
   };
 
   const displayTaskList = () => {
-    if (displayTasks) {
-      if (taskList.length === 0) {
-        return <p>No tasks to display.</p>;
-      }
-
+    if (displayTasks && taskList.length > 0) {
       return (
         <ul>
           {taskList.map((task, index) => (
             <li key={index}>
               Title: {task.title}, Task: {task.task}, Is Complete: {task.isComplete.toString()}
+              <button onClick={() => updateTask(index)}>
+                {task.isComplete ? 'Uncheck' : 'Check'}
+              </button>
             </li>
           ))}
         </ul>
@@ -96,7 +99,7 @@ function App() {
         <button type="submit">Send</button>
       </form>
       <button onClick={toggleDisplayTasks}>
-        {displayTasks && taskList.length === 0 ? 'No Task to Display' : 'Show/Hide Task List'}
+        {displayTasks ? 'Hide Task List' : 'Show Task List'}
       </button>
       {displayTaskList()}
     </div>
