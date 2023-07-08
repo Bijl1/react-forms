@@ -30,12 +30,18 @@ function App() {
       <form onSubmit={handleFormSubmit}>
         <label>
           Title: 
-          <input type='text' name="title" value={formData.title} onChange={handleChange} />
+          <input 
+          type='text' 
+          name="title"
+           value={formData.title} onChange={handleChange} />
         </label>
         <br />
         <label>
           Task: 
-          <input type='text' name="task" value={formData.task} onChange={handleChange} />
+          <input 
+          type='text' 
+          name="task" 
+          value={formData.task} onChange={handleChange} />
         </label>
         <br />
         <label>
